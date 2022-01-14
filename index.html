@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="styles.css">
+    <title>Simple Calculator App</title>
+
+</head>
+
+<body>
+
+    <h1>Simple Calculator App</h1>
+
+    <div class ="flexbox-container">
+
+        <div id="main-rectangle">
+            <div id="display-container"></div>
+            <div id="display-box"></div>
+            <!-- <div id="display-box" contenteditable="true" data-placeholder="0"></div> -->
+            <div id="numbers-container">
+                
+                <div  class="numbers" id="clear-circle">C</div>
+                <div  class="operations" id="plus-minus-circle">&PlusMinus;</div>
+                <div  class="operations" id="percentage-circle">&percnt;</div>
+                <div  class="numbers" id="number-7">7</div>
+                <div  class="numbers" id="number-8">8</div>
+                <div  class="numbers" id="number-9">9</div>
+                <div  class="numbers" id="number-4">4</div>
+                <div  class="numbers" id="number-5">5</div>
+                <div  class="numbers" id="number-6">6</div>
+                <div  class="numbers" id="number-1">1</div>
+                <div  class="numbers" id="number-2">2</div>
+                <div  class="numbers" id="number-3">3</div>
+                <div id="decimal-div">
+                    <div class="numbers" id="decimal-point" onclick="disarmDecimal()">&dot;</div>
+                    
+                </div>
+                <div class="numbers" id="number-0">0</div>
+               
+        
+            </div>
+            <div id="operators-container">
+                <div class="operations" id="division-circle">&divide;</div>
+                <div class="operations" id="multiply-circle">&times;</div>
+                <div class="operations" id="subtraction-circle">&minus;</div>
+                <div class="operations" id="addition-circle">&plus;</div>
+                <div class="operations" id="equals-circle">&equals;</div>
+            </div>
+
+
+        </div>
+
+    
+     </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
