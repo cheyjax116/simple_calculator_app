@@ -1,10 +1,10 @@
 # simple_calculator_app
-Simple Calculator App
+Vanilla Javascript Calculator
 
 Summary: <br>
 A simple calculator application written in HTML, CSS and Javascript.
 
-<!-- <a href="">Click here to test out the app!</a>  -->
+<a href="https://cheyjax116.github.io/simple_calculator_app/">Click here to test out the app!</a> 
 
 <img alt="Simple Calculator App Screenshot" src="https://user-images.githubusercontent.com/77046115/149451277-72b8d333-035c-4988-8c7a-457fff367f11.png">
 
