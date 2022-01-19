@@ -1,5 +1,5 @@
-# simple_calculator_app
-Vanilla Javascript Calculator
+# Vanilla Javascript Calculator
+
 
 Summary: <br>
 A simple calculator application written in HTML, CSS and Javascript.
