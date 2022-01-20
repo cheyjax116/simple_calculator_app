@@ -19,7 +19,7 @@ h1 {
 
 #main-rectangle {
   width: 250px;
-  height: 400px;
+  height: 450px;
   background-color: #322f2f;
   border: 3px solid rgb(45, 19, 19);
   border-radius: 25px;
@@ -71,6 +71,14 @@ h1 {
   background-color: #7e7c7c;
   border-radius: 20px;
 
+}
+
+#memory-container {
+  width: 240px;
+  height: 48px;
+  margin: 8px 5px 0px 5px;
+  background-color: #7e7c7c;
+  border-radius: 20px;
 }
 
 #clear-circle {
@@ -451,6 +459,66 @@ h1 {
 }
 
 #number-0:hover {
+  background-color: rgb(63, 40, 40);
+  cursor: default;
+}
+
+#MPlus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 65px;
+  height: 40px;
+  margin-left: 5px;
+  margin-top: 4px;
+  position: absolute;
+  border-radius: 25px;
+  background-color: rgb(27, 29, 38);;
+  color: whitesmoke;
+  font-size: 1.5em;
+}
+
+#MPlus:hover {
+  background-color: rgb(63, 40, 40);
+  cursor: default;
+}
+
+#MR {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 65px;
+  height: 40px;
+  margin-left: 88px;
+  margin-top: 4px;
+  position: absolute;
+  border-radius: 25px;
+  background-color: rgb(27, 29, 38);;
+  color: whitesmoke;
+  font-size: 1.5em;
+}
+
+#MR:hover {
+  background-color: rgb(63, 40, 40);
+  cursor: default;
+}
+
+#MC {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 65px;
+  height: 40px;
+  margin-left: 170px;
+  margin-top: 4px;
+  position: absolute;
+  border-radius: 25px;
+  background-color: rgb(27, 29, 38);
+  color: whitesmoke;
+  font-size: 1.5em;
+}
+
+#MC:hover {
   background-color: rgb(63, 40, 40);
   cursor: default;
 }

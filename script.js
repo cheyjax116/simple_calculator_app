@@ -2,6 +2,7 @@ let displayBox = document.getElementById("display-box");
 let num1 = "";
 let num2 = "";
 let pressedOperation = "";
+let storedNum = 0;
 
 const numbers = document.querySelectorAll(".numbers");
 
@@ -60,6 +61,14 @@ const pressedNumber = (number) => {
       num2 += number;
       displayBox.innerHTML = num2;
     }
+
+    const equal = document.getElementById("equals-circle");
+    equal.addEventListener("click", () => {
+      calculate();
+      num1 = "";
+      num2 = "";
+      pressedOperation = "";
+    });
   }
 };
 
@@ -118,7 +127,12 @@ operations.forEach((operation) => {
 });
 
 const equal = document.getElementById("equals-circle");
-equal.addEventListener("click", calculate);
+equal.addEventListener("click", () => {
+  calculate();
+  num1 = Number(displayBox.innerHTML);
+  num2 = "";
+  pressedOperation = "";
+});
 
 const percentage = document.getElementById("percentage-circle");
 percentage.addEventListener("click", function () {
@@ -161,4 +175,17 @@ document.getElementById("clear-circle").addEventListener("click", function () {
   num2 = "";
   pressedOperation = "";
   resetDecimal();
+});
+
+document.getElementById("MR").addEventListener("click", function () {
+  displayBox.innerHTML = parseFloat(storedNum.toFixed(4));
+});
+
+document.getElementById("MC").addEventListener("click", function () {
+  storedNum = 0;
+});
+
+document.getElementById("MPlus").addEventListener("click", function () {
+  storedNum += Number(displayBox.innerHTML);
+  console.log(storedNum);
 });
