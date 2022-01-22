@@ -4,7 +4,11 @@
 Summary: <br>
 A simple calculator application written in HTML, CSS and Javascript.
 
+<<<<<<< HEAD
 <a href="https://cheyjax116.github.io/simple_calculator_app/">CLICK HERE TO USE THE CALCULATOR!</a> 
+=======
+<a href="https://cheyjax116.github.io/simple_calculator_app/" style="font-size: 50px">Click here to use the calculator!</a> 
+>>>>>>> ba2ad6f... Update README.md
 
 <img alt="Simple Calculator App Screenshot" src="https://user-images.githubusercontent.com/77046115/150272118-4dd12d24-6c5d-46bb-8cba-28493bfad235.png">
 
