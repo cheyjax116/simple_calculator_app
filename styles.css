@@ -53,7 +53,6 @@ h1 {
   color: rgb(14, 6, 6);
   border-radius: 10px;
   border: 3px solid rgb(96, 79, 79);
-  /* overflow: hidden; */
 }
 
 #numbers-container {
@@ -70,7 +69,6 @@ h1 {
   margin: -320px 50px 0px 195px;
   background-color: #7e7c7c;
   border-radius: 20px;
-
 }
 
 #memory-container {
@@ -93,7 +91,6 @@ h1 {
   height: 40px;
   border-radius: 25px;
   font-size: 1.5em;
-
 }
 #clear-circle:hover {
   background-color: rgb(255, 255, 255);
@@ -473,7 +470,7 @@ h1 {
   margin-top: 4px;
   position: absolute;
   border-radius: 25px;
-  background-color: rgb(27, 29, 38);;
+  background-color: rgb(27, 29, 38);
   color: whitesmoke;
   font-size: 1.5em;
 }
@@ -493,7 +490,7 @@ h1 {
   margin-top: 4px;
   position: absolute;
   border-radius: 25px;
-  background-color: rgb(27, 29, 38);;
+  background-color: rgb(27, 29, 38);
   color: whitesmoke;
   font-size: 1.5em;
 }
@@ -527,3 +524,11 @@ h1 {
   pointer-events: none;
 }
 
+button {
+  border: none;
+}
+
+.text-field {
+  display: inline;
+  max-width: 100%;
+}

@@ -1,191 +1,274 @@
-let displayBox = document.getElementById("display-box");
 let num1 = "";
 let num2 = "";
 let pressedOperation = "";
-let storedNum = 0;
+let numkeys = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "Backspace",
+  "ArrowRight",
+  "ArrowLeft",
+  ".",
+];
 
-const numbers = document.querySelectorAll(".numbers");
+initializeCalculator();
 
-function checkNumbers() {
+function initializeCalculator() {
+  initializingNumberButtons();
+  initializeMemory();
+  initializeOperators();
+  initializeDisplayBox();
+}
+
+function initializingNumberButtons() {
+  const numbers = document.querySelectorAll(".numbers");
   numbers.forEach((num) => {
-    num.addEventListener("click", function () {
-      switch (num.id) {
-        case "number-0":
-          num = 0;
-          break;
-        case "number-1":
-          num = 1;
-          break;
-        case "number-2":
-          num = 2;
-          break;
-        case "number-3":
-          num = 3;
-          break;
-        case "number-4":
-          num = 4;
-          break;
-        case "number-5":
-          num = 5;
-          break;
-        case "number-6":
-          num = 6;
-          break;
-        case "number-7":
-          num = 7;
-          break;
-        case "number-8":
-          num = 8;
-          break;
-        case "number-9":
-          num = 9;
-          break;
-        case "decimal-point":
-          num = ".";
-          break;
-      }
-      pressedNumber(num);
+    num.addEventListener("click", (e) => {
+      captureNumberButtonPress(e.target.value);
     });
   });
 }
 
-checkNumbers();
+function initializeDisplayBox() {
+  let displayBox = document.getElementById("display-box");
 
-const pressedNumber = (number) => {
-  const displayNumber = displayBox.innerHTML;
-  if (displayNumber.length < 14) {
-    if (!pressedOperation) {
-      num1 += number;
-      displayBox.innerHTML = num1;
-    } else {
-      num2 += number;
-      displayBox.innerHTML = num2;
+  displayBox.addEventListener("keyup", function test(event) {
+    if (!numkeys.includes(event.key) && !pressedOperation) {
+      setDisplayValue(num1);
+    } else if (!numkeys.includes(event.key) && pressedOperation) {
+      setDisplayValue(num2);
     }
 
-    const equal = document.getElementById("equals-circle");
-    equal.addEventListener("click", () => {
-      calculate();
-      num1 = "";
+    if (numkeys.includes(event.key)) {
+      if (!pressedOperation) {
+        if (num1.length < 13) {
+          num1 = getDisplayValue();
+        } else if (num1.length == 13) {
+          setDisplayValue(num1);
+          console.log("num too long");
+          displayBox.contentEditable = "false";
+        }
+        checkDecimalDisplay();
+
+        if (displayBox.innerText == "") {
+          resetDecimal();
+        }
+      } else if (pressedOperation) {
+        checkDecimalDisplay();
+
+        if (displayBox.innerText == "") {
+          resetDecimal();
+        }
+        num2 = getDisplayValue();
+      }
+      // console.log(num1, num2)
+    }
+  });
+}
+
+function initializeMemory() {
+  let storedNum = 0;
+
+  document.getElementById("MR").addEventListener("click", function () {
+    storedNum = parseFloat(storedNum.toFixed(4));
+    setDisplayValue(storedNum);
+    if (pressedOperation == "") {
+      num1 = storedNum;
+    } else {
+      num2 = storedNum;
+    }
+  });
+  document.getElementById("MC").addEventListener("click", function () {
+    storedNum = 0;
+  });
+  document.getElementById("MPlus").addEventListener("click", function () {
+    storedNum += Number(getDisplayValue());
+  });
+}
+function initializeOperators() {
+  const operations = document.querySelectorAll(".operations");
+  operations.forEach((operation) => {
+    operation.addEventListener("click", function (e) {
+      num1 = Number(num1);
+      num2 = Number(num2);
+      resetDecimal();
+
+      if (num1 && num2) {
+        calculate(num1, num2);
+      }
+
+      pressedOperation = e.target.value;
+      num1 = Number(getDisplayValue());
       num2 = "";
-      pressedOperation = "";
+      detectMouseClick();
     });
-  }
-};
-
-function calculateAddition() {
-  let current = displayBox.innerHTML;
-  current = parseFloat(displayBox.innerHTML);
-  num2 = current;
-  let equal = parseFloat(Number(num1) + Number(num2)).toFixed(4);
-  displayBox.innerHTML = Number(equal);
-  pressedOperation = "";
+  });
 }
 
-function calculateSubtraction() {
-  let current = displayBox.innerHTML;
-  current = parseFloat(displayBox.innerHTML);
-  num2 = current;
-  let equal = parseFloat(num1 - num2).toFixed(4);
-  displayBox.innerHTML = Number(equal);
-  pressedOperation = "";
-}
-
-function calculateMultiplication() {
-  let current = displayBox.innerHTML;
-  current = parseFloat(displayBox.innerHTML);
-  num2 = current;
-  let equal = parseFloat(num1 * num2).toFixed(4);
-  displayBox.innerHTML = Number(equal);
-  pressedOperation = "";
-}
-
-function calculateDivision() {
-  let current = displayBox.innerHTML;
-  current = parseFloat(displayBox.innerHTML);
-  num2 = current;
-  let equal = parseFloat(num1 / num2).toFixed(4);
-  displayBox.innerHTML = Number(equal);
-  pressedOperation = "";
-}
-
-const operations = document.querySelectorAll(".operations");
-
-operations.forEach((operation) => {
-  operation.addEventListener("click", function (e) {
+const equalButton = document.getElementById("equals-circle");
+equalButton.addEventListener("click", () => {
+  if (num2 != "") {
     num1 = Number(num1);
     num2 = Number(num2);
-
-    if (num1 && num2) {
-      calculate();
-    }
-
-    resetDecimal();
-    pressedOperation = e.target.id;
-    num1 = Number(displayBox.innerHTML);
-    num2 = "";
-  });
-});
-
-const equal = document.getElementById("equals-circle");
-equal.addEventListener("click", () => {
-  calculate();
-  num1 = Number(displayBox.innerHTML);
-  num2 = "";
-  pressedOperation = "";
+    calculate(num1, num2);
+    resetCalculator();
+  }
 });
 
 const percentage = document.getElementById("percentage-circle");
 percentage.addEventListener("click", function () {
-  percent = parseFloat(displayBox.innerHTML) / 100;
-  displayBox.innerHTML = percent;
+  percent = parseFloat(getDisplayValue()) / 100;
+  setDisplayValue(percent);
 });
 
 const plusMinus = document.getElementById("plus-minus-circle");
 plusMinus.addEventListener("click", function () {
-  displayBox.innerHTML = "-" + displayBox.innerHTML;
+  const currentDisplayValue = getDisplayValue();
+  setDisplayValue(`-${currentDisplayValue}`);
 });
 
-function calculate() {
-  if (pressedOperation == "addition-circle") {
-    calculateAddition();
-  } else if (pressedOperation == "subtraction-circle") {
-    calculateSubtraction();
-  } else if (pressedOperation == "multiply-circle") {
-    calculateMultiplication();
-  } else if (pressedOperation == "division-circle") {
-    calculateDivision();
+document.getElementById("clear-circle").addEventListener("click", function () {
+  setDisplayValue("");
+  resetCalculator();
+  resetDecimal();
+  resetDisplaySize();
+});
+
+function calculateAddition() {
+  const current = parseFloat(getDisplayValue());
+  num2 = current;
+  let equal = Number(parseFloat(Number(num1) + Number(num2)).toFixed(4));
+  setDisplayValue(equal);
+  pressedOperation = "";
+}
+
+function calculateSubtraction() {
+  const current = parseFloat(getDisplayValue());
+  num2 = current;
+  let equal = Number(parseFloat(num1 - num2).toFixed(4));
+  setDisplayValue(equal);
+  pressedOperation = "";
+}
+
+function calculateMultiplication() {
+  const current = parseFloat(getDisplayValue());
+  num2 = current;
+  let equal = Number(parseFloat(num1 * num2).toFixed(4));
+  setDisplayValue(equal);
+  pressedOperation = "";
+}
+
+function calculateDivision() {
+  const current = parseFloat(getDisplayValue());
+  num2 = current;
+  const equal = Number(parseFloat(num1 / num2).toFixed(4));
+  setDisplayValue(equal);
+  pressedOperation = "";
+}
+
+function calculate(firstOperand, secondOperand) {
+  let equal;
+  if (pressedOperation == "+") {
+    equal = Number(parseFloat(firstOperand + secondOperand).toFixed(4));
+  } else if (pressedOperation == "-") {
+    equal = Number(parseFloat(firstOperand - secondOperand).toFixed(4));
+  } else if (pressedOperation == "*") {
+    equal = Number(parseFloat(firstOperand * secondOperand).toFixed(4));
+  } else if (pressedOperation == "/") {
+    equal = Number(parseFloat(firstOperand / secondOperand).toFixed(4));
   }
+  if (equal.toString().length > 14 && equal.toString().length < 21) {
+    reduceDisplaySize();
+    setDisplayValue(equal);
+  } else if (equal.toString().length >= 21) {
+    setDisplayValue(Number(equal.toPrecision(1 + 4)));
+  } else {
+    setDisplayValue(equal);
+  }
+  pressedOperation = "";
 }
 
 function resetDecimal() {
   document.getElementById("decimal-point").style.pointerEvents = "auto";
+  numkeys.push(".");
 }
 
 function disarmDecimal() {
   document.getElementById("decimal-point").style.pointerEvents = "none";
+  numkeys.pop(".");
 }
 
-function resetDisplayBox() {
-  document.getElementById("display-box");
-}
-
-document.getElementById("clear-circle").addEventListener("click", function () {
-  displayBox.innerHTML = "";
+function resetCalculator() {
   num1 = "";
   num2 = "";
   pressedOperation = "";
-  resetDecimal();
-});
+}
+//helpers
+function captureNumberButtonPress(number) {
+  if (!pressedOperation) {
+    num1 += number;
+    if (getDisplayValue().length < 14) {
+      setDisplayValue(num1);
+    } else if (getDisplayValue().length == 14) {
+      num1 = getDisplayValue();
+      setDisplayValue(num1);
+    }
+  } else if (pressedOperation) {
+    num2 += number;
+    if (num2.length <= 14) {
+      setDisplayValue(num2);
+    } else if (num2.length == 14) {
+      num2 = getDisplayValue();
+      setDisplayValue(num2);
+    }
+  }
+}
 
-document.getElementById("MR").addEventListener("click", function () {
-  displayBox.innerHTML = parseFloat(storedNum.toFixed(4));
-});
+function captureKeyPressNumbers(number) {
+  document.addEventListener("keydown", function (event) {
+    console.log(event);
+    console.log(event);
+    console.log(event.key);
+  });
+}
 
-document.getElementById("MC").addEventListener("click", function () {
-  storedNum = 0;
-});
+function getDisplayValue() {
+  return document.getElementById("display-box").innerText;
+}
 
-document.getElementById("MPlus").addEventListener("click", function () {
-  storedNum += Number(displayBox.innerHTML);
-  console.log(storedNum);
-});
+function setDisplayValue(newValue) {
+  document.getElementById("display-box").innerText = newValue;
+}
+
+function reduceDisplaySize() {
+  document.getElementById("display-box").style.fontSize = "1.4em";
+}
+
+function resetDisplaySize() {
+  document.getElementById("display-box").style.fontSize = "2em";
+}
+
+function clearDisplayAfterOperation() {
+  return (document.getElementById("display-box").innerText = "");
+}
+
+function detectMouseClick() {
+  let displayBox = document.getElementById("display-box");
+  displayBox.addEventListener("mouseenter", function () {
+    displayBox.contentEditable = "true";
+  });
+}
+
+function checkDecimalDisplay() {
+  let displayBox = document.getElementById("display-box");
+  if (displayBox.innerText.includes(".")) {
+    disarmDecimal();
+  }
+}
